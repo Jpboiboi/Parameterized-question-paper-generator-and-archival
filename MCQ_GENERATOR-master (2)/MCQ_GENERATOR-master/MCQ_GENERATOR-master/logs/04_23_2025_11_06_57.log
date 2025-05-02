@@ -1,0 +1,14 @@
+[2025-04-23 11:10:20,076] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:10:24,699] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:38:50,815] 402 PyPDF2._page - WARNING -  impossible to decode XFormObject /arial-minus
+[2025-04-23 11:38:51,803] 402 PyPDF2._page - WARNING -  impossible to decode XFormObject /arial-minus
+[2025-04-23 11:38:51,933] 402 PyPDF2._page - WARNING -  impossible to decode XFormObject /arial-minus
+[2025-04-23 11:38:57,044] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-04-23 11:39:41,656] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:39:43,646] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:39:56,683] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:39:58,345] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:40:25,244] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:40:26,140] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:42:14,316] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-04-23 11:42:16,014] 1025 httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

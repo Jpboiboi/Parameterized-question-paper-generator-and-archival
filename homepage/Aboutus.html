@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - EduGen</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link
+    rel="stylesheet"
+    as="style"
+    onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Lexend:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: 'Lexend', 'Noto Sans', sans-serif;
+    }
+
+    .creator-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .creator-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .creator-image {
+      transition: transform 0.3s ease;
+    }
+
+    .creator-card:hover .creator-image {
+      transform: scale(1.05);
+    }
+
+    .highlight-title {
+      color: #1980e6;
+    }
+  </style>
+</head>
+<body class="bg-white text-[#111418]">
+  <!-- Header -->
+  <header class="flex items-center justify-between border-b border-[#f0f2f4] px-10 py-3">
+    <div class="flex items-center gap-4">
+      <div class="size-4">
+        <!-- Your SVG Logo -->
+      </div>
+      <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">EduGen</h2>
+    </div>
+    <div class="flex items-center gap-9">
+      <a class="text-sm font-medium leading-normal" href="systum.html">Home</a>
+      <a class="text-sm font-medium leading-normal" href="courses.html">Courses</a>
+      <a class="text-sm font-medium leading-normal" href="systum.html">Practice</a>
+      <a class="text-sm font-medium leading-normal" href="aboutus.html">About</a>
+    </div>
+    <div class="flex gap-2">
+      <button class="min-w-[84px] h-10 px-4 bg-[#1980e6] text-white text-sm font-bold rounded-xl">Sign in</button>
+      <button class="min-w-[84px] h-10 px-4 bg-[#f0f2f4] text-[#111418] text-sm font-bold rounded-xl">Get started</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="px-10 py-10">
+    <h1 class="text-3xl font-bold mb-6 highlight-title">Meet the Creators</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Creator 1 -->
+      <div class="creator-card bg-[#f0f2f4] p-6 rounded-xl text-center">
+        <img src="Atharva.jpeg" alt="Creator 1" class="creator-image mx-auto rounded-full mb-4 w-32 h-32 object-cover" />
+        <h2 class="text-xl font-semibold mb-2">Atharva Yewale</h2>
+        <p class="text-sm text-[#637588]">Frontend Developer</p>
+        <p class="mt-2 text-sm">Atharva is passionate about creating intuitive user interfaces and enhancing user experience.</p>
+      </div>
+
+      <!-- Creator 2 -->
+      <div class="creator-card bg-[#f0f2f4] p-6 rounded-xl text-center">
+        <img src="Jp.jpeg" alt="Creator 2" class="creator-image mx-auto rounded-full mb-4 w-32 h-32 object-cover" />
+        <h2 class="text-xl font-semibold mb-2">Aaryan Jp</h2>
+        <p class="text-sm text-[#637588]">Backend Developer</p>
+        <p class="mt-2 text-sm">Aaryan specializes in server-side logic and database management to ensure seamless functionality.</p>
+      </div>
+
+      <!-- Creator 3 -->
+      <div class="creator-card bg-[#f0f2f4] p-6 rounded-xl text-center">
+        <img src="soham.jpeg" alt="Creator 3" class="creator-image mx-auto rounded-full mb-4 w-32 h-32 object-cover" />
+        <h2 class="text-xl font-semibold mb-2">Soham Jadhav</h2>
+        <p class="text-sm text-[#637588]">UI/UX Designer</p>
+        <p class="mt-2 text-sm">Soham designs user-friendly interfaces with a focus on accessibility and aesthetics.</p>
+      </div>
+
+      <!-- Creator 4 -->
+      <div class="creator-card bg-[#f0f2f4] p-6 rounded-xl text-center">
+        <img src="prem.png" alt="Creator 4" class="creator-image mx-auto rounded-full mb-4 w-32 h-32 object-cover" />
+        <h2 class="text-xl font-semibold mb-2">Prem Nanda</h2>
+        <p class="text-sm text-[#637588]">Backend Developer</p>
+        <p class="mt-2 text-sm">Prem manages database-related project timelines and ensures effective collaboration among backend team members to maintain data integrity, performance, and scalability.</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

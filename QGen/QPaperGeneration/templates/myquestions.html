@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% if message %}
+<div>{{message}}</div>
+{% endif %}
+<h1 class="fonts">Add a new Question</h1>
+<div class="cards" style="grid-template-columns: 1fr;">
+  <form class="container" action="{% url 'myquestions' %}" method="post">
+    {% csrf_token %}
+    <br>
+    <h3 class="font">Questions</h3>
+    <div class="form-group">
+      <textarea name="question" class="form-control border border-info-subtle border-3 "
+        placeholder="Type the Question here" required="true" rows="3"></textarea>
+    </div>
+    <br>
+    <h3 class="font">Subject</h3>
+    <div class="form-group">
+      <input name="subject" type="text" class="form-control border border-info-subtle border-3"
+        placeholder="Enter the Subject here" required="true">
+    </div>
+    <br>
+    <h3 class="font">Subject Sub-Topic</h3>
+    <div class="form-group">
+      <input name="topic" type="text" class="form-control border border-info-subtle border-3"
+        placeholder="Enter the Topic here" required="true">
+    </div>
+    <br>
+    <h3 class="font">Marks</h3>
+    <div class="form-group">
+      <input name="marks" type="text" class="form-control border border-info-subtle border-3"
+        placeholder="Enter the marks here" required="true">
+    </div>
+    <br>
+    <h3 class="font">Answers</h3>
+    <div class="form-group">
+      <textarea name="answer" class="form-control border border-info-subtle border-3"
+        placeholder="Enter the answer of the question here" rows="3"></textarea>
+    </div>
+    <br>
+    <div class="row">
+      <div style="width:150px">Difficulty-level</div>
+      <div class="col-1 form-group">
+        <select name="difficulty" class="form-control col-1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <h3 class="font">CO's MAPPING</h3>
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" value="1" name="cos" checked>
+                  <label for="chkBox">CO1</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" value="2" name="cos">
+                  <label for="chkBox">CO2</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" value="3" name="cos">
+                  <label for="chkBox">CO3</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" value="4" name="cos">
+                  <label for="chkBox">CO4</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" value="5" name="cos">
+                  <label for="chkBox">CO5</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" value="6" name="cos">
+                  <label for="chkBox">CO6</label>
+                </div>
+              </div>
+            </div>
+          </div>
+    <br>
+    <button type="submit" class="buttons">Submit</button>
+    <br>
+  </form>
+</div>
+<br>
+<div class="row">
+  <div class="col">
+    <h1 class="fonts">Or browse existing Questions</h1>
+  </div>
+</div>
+<div class="card" style="height: 500px;">
+  <div class="overflow-auto">
+    <div style="width:100%;">
+      {% for question in questions %}
+      <div class="card">
+        {% comment %} <img class="card-img-top" src="..." alt="Card image cap"> {% endcomment %}
+        <div class="card-body">
+          <h5 class="card-title">{{question.question}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Question by : {{question.user}}</h6>
+          <a href="#" class="card-link">VIEW QUESTION</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

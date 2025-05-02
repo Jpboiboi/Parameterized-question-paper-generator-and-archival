@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    {% if message %}
+        <div>{{message}}</div>
+    {% endif %}
+    <h1 class="fonts">Make a New Paper</h1>
+        <form class="cards" action="{% url 'papergenerator' %}" method="post">
+            {% csrf_token %}
+            <div class="container">
+                <br />
+                <h3 class="font">Heading</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control border border-info-subtle border-3"
+                        id="formGroupExampleInput" placeholder="Enter the Heading" name="heading"/ required>
+                </div>
+                <br />
+                <h3 class="font">Extra Details</h3>
+                <div class="form-group">
+                    <textarea class="form-control border border-info-subtle border-3" placeholder="Type the Details "
+                        id="exampleFormControlTextarea1" rows="3" name="extradetails" required></textarea>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-3">
+                        <h3 class="font">Paper Format :</h3>
+                        <select class="form-select" name="ptype" id="ptype" >
+                            <option value=1>Unit Test Pattern - 30Marks</option>
+                            <option value=2>Semester Pattern -100Marks</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                {% comment %} <div class="slidecontainer">
+                    <h3 class="font" id="difficulty">Difficulty Level :</h3>
+                    <input type="range" min="1" max="6" value="3" class="slider" name="diffslider" id="myRange" />
+                </div> {% endcomment %}
+                <br />
+                <div class="row">
+                    <div class="col-3">
+                        <h3 class="font">Subject :</h3>
+                        <select class="form-select" name="subsel" id="subsel">
+                          {% for subject in subjects %}
+                              <option value="{{subject.id}}">{{subject.name}}</option>
+                          {% endfor %}
+                        </select>
+                        <br />
+                    </div>
+
+                    <div class="m-2">
+                        <button type="submit" class="buttons">Continue</button>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </form>
+
+        <script>
+          var slider = document.getElementById("myRange");
+          var output = document.getElementById("difficulty");
+          output.innerHTML = `Difficulty Level : ${slider.value}`; // Display the default slider value
+
+          // Update the current slider value (each time you drag the slider handle)
+          slider.oninput = function() {
+          output.innerHTML = `Difficulty Level : ${this.value}`;
+          }
+      </script>
+    {% else %}
+    <div>Please Login to Continue</div>
+    {% endif %}
+{% endblock %}

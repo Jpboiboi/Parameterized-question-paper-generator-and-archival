@@ -1,0 +1,86 @@
+<!-- index.html - HTML template -->
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Question Generator</title>
+    
+    <!-- Bootstrap CSS (Replit Dark Theme) -->
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <div class="container py-4">
+        <header class="pb-3 mb-4 border-bottom">
+            <h1 class="d-flex align-items-center text-decoration-none">
+                <i class="fas fa-code me-2"></i>
+                Algorithm Question Generator
+            </h1>
+        </header>
+        <div class="p-4 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-3">
+                <h2 class="mb-3">Generate Programming Questions</h2>
+                <p class="fs-5 mb-4">
+                    Create random algorithm and programming questions by combining elements from our database.
+                    Perfect for interview preparation or learning challenges.
+                </p>
+                
+                <form id="generator-form" class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                        <label for="num-questions" class="form-label">Number of questions:</label>
+                        <input type="number" class="form-control" id="num-questions" name="num_questions" value="5" min="1" max="20">
+                    </div>
+                    <div class="col-md-6">
+                        <button id="generate-btn" type="submit" class="btn btn-secondary w-100">
+                            <i class="fas fa-random me-2"></i>Generate Questions
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="loading" class="d-none text-center py-4">
+            <div class="spinner-border text-secondary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Generating questions...</p>
+        </div>
+        <div id="error-message" class="alert alert-danger d-none" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <span id="error-text"></span>
+        </div>
+        <div id="results-container" class="d-none">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Generated Questions</h3>
+                <button id="copy-all-btn" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-copy me-2"></i>Copy All
+                </button>
+            </div>
+            
+            <div class="list-group" id="questions-list">
+                <!-- Questions will be added here dynamically -->
+            </div>
+        </div>
+        <footer class="pt-3 mt-4 text-body-secondary border-top">
+            <div class="d-flex justify-content-between">
+                <div>Algorithm Question Generator &copy; 2023</div>
+                <div>
+                    <button id="new-batch-btn" class="btn btn-sm btn-outline-secondary d-none">
+                        <i class="fas fa-sync-alt me-2"></i>Generate New Batch
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Courses - EduGen</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link
+    rel="stylesheet"
+    as="style"
+    onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Lexend:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    body {
+      font-family: 'Lexend', 'Noto Sans', sans-serif;
+    }
+
+    .course-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-white text-[#111418]">
+  <!-- Header -->
+  <header class="flex items-center justify-between border-b border-[#f0f2f4] px-10 py-3">
+    <div class="flex items-center gap-4">
+      <div class="size-4">
+        <!-- Logo (optional) -->
+      </div>
+      <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">EduGen</h2>
+    </div>
+    <div class="flex items-center gap-9">
+      <a class="text-sm font-medium leading-normal" href="systum.html">Home</a>
+      <a class="text-sm font-medium leading-normal" href="courses.html">Courses</a>
+      <a class="text-sm font-medium leading-normal" href="systum.html">Practice</a>
+      <a class="text-sm font-medium leading-normal" href="aboutus.html">About</a>
+    </div>
+    <div class="flex gap-2">
+      <button class="min-w-[84px] h-10 px-4 bg-[#1980e6] text-white text-sm font-bold rounded-xl">Sign in</button>
+      <button class="min-w-[84px] h-10 px-4 bg-[#f0f2f4] text-[#111418] text-sm font-bold rounded-xl">Get started</button>
+    </div>
+  </header>
+
+  <!-- Courses Section -->
+  <main class="px-10 py-10">
+    <h1 class="text-3xl font-bold mb-8 text-[#1980e6]">Explore Our Courses</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Course Card 1 -->
+      <div class="course-card bg-[#f0f2f4] p-6 rounded-xl shadow-sm">
+        <h2 class="text-xl font-semibold mb-2">Introduction to Python</h2>
+        <p class="text-sm text-[#637588] mb-4">Learn Python programming from scratch. Great for beginners!</p>
+        <a href="https://www.youtube.com/watch?v=a8KNpJYToKE&list=PL7ersPsTyYt1HnCgrT6Up-pan4yLBpyFs" class="inline-block text-sm font-medium text-[#1980e6] hover:underline">Learn More →</a>
+      </div>
+
+      <!-- Course Card 2 -->
+      <div class="course-card bg-[#f0f2f4] p-6 rounded-xl shadow-sm">
+        <h2 class="text-xl font-semibold mb-2">Web Development Basics</h2>
+        <p class="text-sm text-[#637588] mb-4">Understand HTML, CSS, and JavaScript to build your first website.</p>
+        <a href="https://www.youtube.com/watch?v=8sXRyHI3bLw" class="inline-block text-sm font-medium text-[#1980e6] hover:underline">Learn More →</a>
+      </div>
+
+      <!-- Course Card 3 -->
+      <div class="course-card bg-[#f0f2f4] p-6 rounded-xl shadow-sm">
+        <h2 class="text-xl font-semibold mb-2">Data Structures & Algorithms</h2>
+        <p class="text-sm text-[#637588] mb-4">Master core computer science concepts for coding interviews.</p>
+        <a href="https://www.youtube.com/watch?v=VTLCoHnyACE&list=PLfqMhTWNBTe137I_EPQd34TsgV6IO55pt" class="inline-block text-sm font-medium text-[#1980e6] hover:underline">Learn More →</a>
+      </div>
+
+      <!-- Add more cards as needed -->
+    </div>
+  </main>
+</body>
+</html>
