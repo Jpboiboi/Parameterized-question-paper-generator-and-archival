@@ -17,7 +17,7 @@ def save_to_json_in_english(filename, questions):
         json.dump(questions, f)
 
 def main():
-    st.sidebar.title("MCQ Generator")
+    st.sidebar.title("LLM Questions Generator")
 
     # Select model type
     model_name = st.sidebar.selectbox("Select Model", ["gpt-4o-mini", "gpt-4o", "gpt-4"])

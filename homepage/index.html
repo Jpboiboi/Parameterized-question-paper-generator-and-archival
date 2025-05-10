@@ -1,133 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title>SmartEd – Question Generator</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question Generator</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
     <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap"
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Lexend:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes fade-in-up {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes zoom-in {
-            0% {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        .animate-fade-in-up {
-            animation: fade-in-up 0.5s ease-out;
-        }
-        .zoom-in {
-            animation: zoom-in 0.4s ease-in-out;
-        }
-        .hover\:zoom-out:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
-        }
-    </style>
-</head>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
 
-<body class="bg-black text-white font-[Lexend]">
-    <!-- Header -->
-    <header class="flex justify-between items-center px-6 md:px-16 py-4 bg-[#111] shadow-md">
-        <div class="flex items-center gap-3">
-            <img src="https://cdn-icons-png.flaticon.com/512/3275/3275801.png" alt="logo" class="w-10 h-10 rounded-full" />
-            <h1 class="text-xl font-bold text-red-500">SmartEd</h1>
+  <body class='font-["Lexend","Noto Sans",sans-serif] bg-white'>
+    <div class="min-h-screen flex flex-col">
+      <!-- Navbar -->
+      <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+          <a href="#" class="flex items-center space-x-2">
+            <!-- logo icon -->
+            <svg class="w-8 h-8 text-blue-600" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M39.998 12.236C39.9944 12.2537 39.9875 12.2845 39.9748 12.3294C39.9436 12.4399 39.8949 12.5741 39.8346 12.7175C39.8168 12.7597 39.7989 12.8007 39.7813 12.8398C38.5103 13.7113 35.9788 14.9393 33.7095 15.4811C30.9875 16.131 27.6413 16.5217 24 16.5217C20.3587 16.5217 17.0125 16.131 14.2905 15.4811C12.0012 14.9346 9.44505 13.6897 8.18538 12.8168C8.17384 12.7925 8.16216 12.767 8.15052 12.7408C8.09919 12.6249 8.05721 12.5114 8.02977 12.411C8.00356 12.3152 8.00039 12.2667 8.00004 12.2612C8.00004 12.261 8 12.2607 8.00004 12.2612C8.00004 12.2359 8.0104 11.9233 8.68485 11.3686C9.34546 10.8254 10.4222 10.2469 11.9291 9.72276C14.9242 8.68098 19.1919 8 24 8C28.8081 8 33.0758 8.68098 36.0709 9.72276C37.5778 10.2469 38.6545 10.8254 39.3151 11.3686C39.9006 11.8501 39.9857 12.1489 39.998 12.236ZM4.95178 15.2312L21.4543 41.6973C22.6288 43.5809 25.3712 43.5809 26.5457 41.6973L43.0534 15.223C43.0709 15.1948 43.0878 15.1662 43.104 15.1371L41.3563 14.1648C43.104 15.1371 43.1038 15.1374 43.104 15.1371L43.1051 15.135L43.1065 15.1325L43.1101 15.1261L43.1199 15.1082C43.1276 15.094 43.1377 15.0754 43.1497 15.0527C43.1738 15.0075 43.2062 14.9455 43.244 14.8701C43.319 14.7208 43.4196 14.511 43.5217 14.2683C43.6901 13.8679 44 13.0689 44 12.2609C44 10.5573 43.003 9.22254 41.8558 8.2791C40.6947 7.32427 39.1354 6.55361 37.385 5.94477C33.8654 4.72057 29.133 4 24 4C18.867 4 14.1346 4.72057 10.615 5.94478C8.86463 6.55361 7.30529 7.32428 6.14419 8.27911C4.99695 9.22255 3.99999 10.5573 3.99999 12.2609C3.99999 13.1275 4.29264 13.9078 4.49321 14.3607C4.60375 14.6102 4.71348 14.8196 4.79687 14.9689C4.83898 15.0444 4.87547 15.1065 4.9035 15.1529C4.91754 15.1762 4.92954 15.1957 4.93916 15.2111L4.94662 15.223L4.95178 15.2312ZM35.9868 18.996L24 38.22L12.0131 18.996C12.4661 19.1391 12.9179 19.2658 13.3617 19.3718C16.4281 20.1039 20.0901 20.5217 24 20.5217C27.9099 20.5217 31.5719 20.1039 34.6383 19.3718C35.082 19.2658 35.5339 19.1391 35.9868 18.996Z" fill="currentColor" />
+            </svg>
+            <span class="text-xl font-bold text-gray-900">EduGen</span>
+          </a>
+
+          <nav class="hidden md:flex space-x-6">
+            <a href="#" class="text-gray-600 hover:text-gray-900">Home</a>
+            <a href="courses.html" class="text-gray-600 hover:text-gray-900">Courses</a>
+            <a href="Aboutus.html" class="text-gray-600 hover:text-gray-900">About</a>
+          </nav>
+
+          <div class="flex items-center space-x-3">
+            <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">Sign in</a>
+            <a href="#" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700">Get started</a>
+          </div>
         </div>
-        <nav class="flex gap-6 text-sm font-medium">
-            <a href="#" class="hover:text-red-400 transition">Home</a>
-            <a href="#" class="hover:text-red-400 transition">Resources</a>
-            <a href="#" class="hover:text-red-400 transition">Help</a>
-        </nav>
-    </header>
+      </header>
 
-    <!-- Main Content -->
-    <main class="flex justify-center px-6 md:px-40 py-10 animate-fade-in-up">
-        <div class="w-full max-w-3xl bg-[#1a1a1a] rounded-2xl shadow-lg p-8 md:p-10 zoom-in">
-            <!-- User Avatar -->
-            <div class="flex justify-center mb-6">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" class="w-16 h-16 rounded-full border-2 border-red-600" />
+      <!-- Main Content -->
+      <main class="flex-1 px-6 md:px-10 lg:px-20 py-8 flex justify-center">
+        <div class="w-full max-w-4xl space-y-8">
+          <h1 class="text-2xl font-bold text-gray-900">Create a question paper</h1>
+          <p class="text-gray-700">Choose from four distinct models to generate a question paper. Each model has a brief description explaining its format or specialty.</p>
+
+          <!-- Model cards grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Card Definitions Repeated -->
+            <div class="group border border-gray-200 rounded-xl p-4 flex overflow-hidden transition-shadow hover:shadow-lg hover:bg-blue-50 cursor-pointer" data-model-id="pdf_generation">
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <p class="text-sm text-gray-500">Model 1</p>
+                  <p class="text-lg font-semibold text-gray-900">PDF to MCQ</p>
+                </div>
+                <button class="mt-4 self-start px-4 py-1 text-sm font-medium rounded-lg bg-gray-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">Generate</button>
+              </div>
+              <div class="w-32 h-20 bg-cover bg-center rounded-lg ml-4 flex-shrink-0" style='background-image: url("https://cdn.usegalileo.ai/sdxl10/8157be6e-ba31-43fb-8e57-e8e8bb02a806.png");'></div>
             </div>
 
-            <!-- Headings -->
-            <h3 class="text-3xl text-center font-bold text-red-500 mb-2">Create a Question Paper</h3>
-            <p class="text-center text-gray-300 mb-6">
-                Select the model you'd like to use. Each model will generate different questions based on the prompt you provide.
-            </p>
-
-            <!-- Model Options -->
-            <div class="flex flex-wrap justify-center gap-4 mb-8">
-                <label class="cursor-pointer bg-[#2a2a2a] border border-red-600 text-white px-6 py-3 rounded-xl font-medium text-sm hover:zoom-out transition hover:bg-red-900 shadow-sm">
-                    MCQ Generation from LLM
-                    <input type="radio" name="model" class="sr-only" id="pdf_generation"/>
-                </label>
-                <label class="cursor-pointer bg-[#2a2a2a] border border-red-600 text-white px-6 py-3 rounded-xl font-medium text-sm hover:zoom-out transition hover:bg-red-900 shadow-sm">
-                  MCQ Generation from PDF
-                    <input type="radio" name="model" class="sr-only" id="llm_generation"/>
-                </label>
-                <label class="cursor-pointer bg-[#2a2a2a] border border-red-600 text-white px-6 py-3 rounded-xl font-medium text-sm hover:zoom-out transition hover:bg-red-900 shadow-sm">
-                    Algorithm Question Generator
-                    <input type="radio" name="model" class="sr-only" id="algorithm_generation"/>
-                </label>
-                <label class="cursor-pointer bg-[#2a2a2a] border border-red-600 text-white px-6 py-3 rounded-xl font-medium text-sm hover:zoom-out transition hover:bg-red-900 shadow-sm">
-                    Question Paper Generator
-                     <input type="radio" name="model" class="sr-only" id="qgen_"/>
-              </label>
+            <div class="group border border-gray-200 rounded-xl p-4 flex overflow-hidden transition-shadow hover:shadow-lg hover:bg-blue-50 cursor-pointer" data-model-id="llm_generationn">
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <p class="text-sm text-gray-500">Model 2</p>
+                  <p class="text-lg font-semibold text-gray-900">Self Practice</p>
+                </div>
+                <button class="mt-4 self-start px-4 py-1 text-sm font-medium rounded-lg bg-gray-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">Generate</button>
+              </div>
+              <div class="w-32 h-20 bg-cover bg-center rounded-lg ml-4 flex-shrink-0" style='background-image: url("https://cdn.usegalileo.ai/sdxl10/0e3b103e-fdea-4f0e-b676-9dfd9e966bd8.png");'></div>
             </div>
 
-            <!-- Submit Button to Trigger Appropriate Action -->
-            <div class="text-center">
-                <button id="generate_button" class="bg-red-600 px-6 py-3 rounded-lg text-white font-bold">Generate</button>
+            <div class="group border border-gray-200 rounded-xl p-4 flex overflow-hidden transition-shadow hover:shadow-lg hover:bg-blue-50 cursor-pointer" data-model-id="algorithm_generation">
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <p class="text-sm text-gray-500">Model 3</p>
+                  <p class="text-lg font-semibold text-gray-900">Question Generator</p>
+                </div>
+                <button class="mt-4 self-start px-4 py-1 text-sm font-medium rounded-lg bg-gray-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">Generate</button>
+              </div>
+              <div class="w-32 h-20 bg-cover bg-center rounded-lg ml-4 flex-shrink-0" style='background-image: url("https://cdn.usegalileo.ai/sdxl10/b5b62260-0f4c-4acd-826a-9bcb0e411493.png");'></div>
             </div>
+
+            <div class="group border border-gray-200 rounded-xl p-4 flex overflow-hidden transition-shadow hover:shadow-lg hover:bg-blue-50 cursor-pointer" data-model-id="qgen_">
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <p class="text-sm text-gray-500">Model 4</p>
+                  <p class="text-lg font-semibold text-gray-900">Standardized Question Paper Generator</p>
+                </div>
+                <button class="mt-4 self-start px-4 py-1 text-sm font-medium rounded-lg bg-gray-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">Generate</button>
+              </div>
+              <div class="w-32 h-20 bg-cover bg-center rounded-lg ml-4 flex-shrink-0" style='background-image: url("https://cdn.usegalileo.ai/sdxl10/0576be9a-0dbb-42cb-8322-3934611a7a4b.png");'></div>
+            </div>
+          </div>
         </div>
-    </main>
+      </main>
+    </div>
 
     <script>
-        document.getElementById("generate_button").addEventListener("click", function() {
-            // Change button background and text color
-            const button = document.getElementById("generate_button");
-            button.style.backgroundColor = "red";
-            button.style.color = "white";
-
-            const selectedModel = document.querySelector('input[name="model"]:checked');
-            if (selectedModel) {
-                const modelId = selectedModel.id;
-                switch (modelId) {
-                    case "pdf_generation":
-                        window.location.href = "http://localhost:8501";  // URL for Streamlit app for MCQ Generation from PDF
-                        break;
-                    case "llm_generation":
-                        window.location.href = "http://localhost:8502";  // URL for Streamlit app for MCQ Generation from LLM
-                        break;
-                    case "algorithm_generation":
-                        window.location.href = "http://localhost:5000";  // URL for Python script for Algorithm Question Generator
-                        break;
-                    case "qgen_":
-                        window.location.href = "http://127.0.0.1:8000/";  // URL for Python script for Algorithm Question Generator
-                        break;    
-                    default:
-                        alert("Please select a model.");
-                }
-            } else {
-                alert("Please select a model.");
-            }
+      document.querySelectorAll("[data-model-id]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const id = el.getAttribute("data-model-id");
+          switch (id) {
+            case "pdf_generation":
+              window.location.href = "http://localhost:8501";
+              break;
+            case "llm_generationn":
+              window.location.href = "http://localhost:8502";
+              break;
+            case "algorithm_generation":
+              window.location.href = "http://127.0.0.1:5000/";
+              break;
+            case "qgen_":
+              window.location.href = "http://127.0.0.1:8000/";
+              break;
+          }
         });
+      });
     </script>
-</body>
+  </body>
 </html>

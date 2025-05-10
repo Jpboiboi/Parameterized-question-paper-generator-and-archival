@@ -1,139 +1,102 @@
 import os
-from dotenv import load_dotenv  # Add this import
-
-load_dotenv()  # Add this line to load environment variables from .env
+from dotenv import load_dotenv
 import logging
+import random
 from flask import Flask, render_template, request, jsonify
-from question_generator import generate_questions
-from openai import OpenAI  # Updated import
+from openai import OpenAI
 import mysql.connector
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
-# Create the Flask app
+
+# Create Flask app
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
+
+# Utility: merge question halves randomly
+def merge_question_halves(db1, db2, n):
+    merged = []
+    for _ in range(n):
+        first = random.choice(db1).rstrip("?. ")
+        second = random.choice(db2).strip()
+        merged.append(f"{first} {second}")
+    return merged
+
+# Utility: repair/rephrase any raw question using OpenAI LLM
+# Updated prompt to enforce high-quality, varied, self-contained questions
+def repair_question(raw_question, client):
+    system_prompt = (
+        "You are an expert question-generation assistant. "
+        "You will be given a programming question fragment. "
+        "Your task is to rephrase or correct it so that it becomes a clear, self-contained, grammatically correct programming question. "
+        "Use varied templates and ensure the question is precise and natural. "
+        "Return only the final corrected question."
+    )
+    user_prompt = (
+        f"Here is the raw question fragment to improve:\n"  
+        f"\"{raw_question}\""
+    )
+    # Send system + user messages for better control
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
+    )
+    return response.choices[0].message.content.strip()
+
 @app.route('/')
 def index():
-    """Render the main page of the application."""
     return render_template('index.html')
-def parse_llm_reply(llm_reply):
-    import re
-    # Look for a score at the start of the reply, e.g. "95% - Suggestion"
-    percent_match = re.search(r'(\d{1,3})\s*%', llm_reply)
-    percent = percent_match.group(1) if percent_match else None
-    # Remove the percentage part from the feedback
-    feedback = llm_reply
-    if percent:
-        feedback = llm_reply[llm_reply.find(percent) + len(percent):].lstrip(' %:-')
-    return percent, feedback
 
 @app.route('/generate', methods=['POST'])
 def generate():
-    """Generate random programming questions and verify them using the LLM."""
+    """Generate merged questions and run each one through the LLM for correction."""
     try:
+        # 1) Determine how many questions to build
         num_questions = int(request.form.get('num_questions', 5))
-        if num_questions < 1:
-            num_questions = 1
-        elif num_questions > 20:
-            num_questions = 20
+        num_questions = max(1, min(num_questions, 20))
 
-        questions = generate_questions(num_questions)
-
-        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-        verified_questions = []
-
-        for q in questions:
-            prompt = (
-                f"Evaluate the following programming question for correctness and clarity. "
-                f"Reply in the format: '<score>% - <suggestion or Correct if perfect>'. "
-                f"Score should be from 0 to 100. If not perfect, suggest improvements.\n\n{q}"
-            )
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}]
-            )
-            llm_reply = response.choices[0].message.content.strip()
-            percent, feedback = parse_llm_reply(llm_reply)
-            verified_questions.append({
-                'question': q,
-                'llm_percent': percent or '0',
-                'llm_feedback': feedback or llm_reply
-            })
-
-        return jsonify({
-            'success': True,
-            'questions': verified_questions
-        })
-    except Exception as e:
-        logging.error(f"Error generating questions: {str(e)}")
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
-@app.route('/llm', methods=['POST'])
-def llm():
-    """Endpoint to interact with an LLM model."""
-    try:
-        prompt = request.json.get('prompt', '')
-        if not prompt:
-            return jsonify({'success': False, 'error': 'Prompt is required.'}), 400
-
-        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))  # Updated client initialization
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        llm_reply = response.choices[0].message.content
-
-        return jsonify({'success': True, 'response': llm_reply})
-    except Exception as e:
-        logging.error(f"Error with LLM: {str(e)}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-@app.route('/verify_questions', methods=['GET'])
-def verify_questions():
-    """Fetch all questions from the database and verify them using the LLM."""
-    try:
+        # 2) Fetch the two halves from MySQL
         db = mysql.connector.connect(
             host=os.environ.get("DB_HOST", "localhost"),
             user=os.environ.get("DB_USER", "root"),
             password=os.environ.get("DB_PASSWORD", ""),
-            database="questions"
+            database=os.environ.get("DB_NAME", "questions")
         )
         cursor = db.cursor()
         cursor.execute("SELECT text FROM question_starts")
         starts = [row[0] for row in cursor.fetchall()]
         cursor.execute("SELECT text FROM question_ends")
         ends = [row[0] for row in cursor.fetchall()]
-        questions = [f"{start} {end}" for start in starts for end in ends]
+        cursor.close()
+        db.close()
 
+        # 3) Randomly merge them into raw questions
+        raw_questions = merge_question_halves(starts, ends, num_questions)
+
+        # 4) Initialize the OpenAI client
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-        verified_questions = []
 
-        for q in questions:
-            prompt = (
-                f"Evaluate the following programming question for correctness and clarity. "
-                f"Reply in the format: '<score>% - <suggestion or Correct if perfect>'. "
-                f"Score should be from 0 to 100. If not perfect, suggest improvements.\n\n{q}"
-            )
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}]
-            )
-            llm_reply = response.choices[0].message.content.strip()
-            percent, feedback = parse_llm_reply(llm_reply)
-            verified_questions.append({
-                'question': q,
-                'llm_percent': percent or '0',
-                'llm_feedback': feedback or llm_reply
-            })
+        # 5) Repair *every* question, regardless of correctness
+        corrected_questions = []
+        for raw_q in raw_questions:
+            corrected = repair_question(raw_q, client)
+            corrected_questions.append(corrected)
 
+        # 6) Return the polished list of questions
         return jsonify({
             'success': True,
-            'questions': verified_questions
+            'questions': corrected_questions
         })
+
     except Exception as e:
-        logging.error(f"Error verifying questions: {str(e)}")
+        logging.error(f"Error generating questions: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
